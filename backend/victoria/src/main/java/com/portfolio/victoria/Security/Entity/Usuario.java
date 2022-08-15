@@ -1,7 +1,7 @@
 
 package com.portfolio.victoria.Security.Entity;
 
-import java.io.Serializable;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
  * @author vicky
  */
 @Entity 
-public class Usuario implements Serializable {
+public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -34,6 +34,7 @@ public class Usuario implements Serializable {
     private String email;
     @NotNull
     private String password;
+    @NotNull
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
     private Set<Rol> roles = new HashSet<>();
@@ -43,13 +44,13 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-     public Usuario(String nombre, String nombreUsuario, String email, String password) {
+     public Usuario(@NotNull String nombre, @NotNull String nombreUsuario, @NotNull String email, @NotNull String password) {
         this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;
         this.email = email;
         this.password = password;
     }
-    
+
     //getter y setter
      //@Getter
      //@Setter
@@ -94,20 +95,12 @@ public class Usuario implements Serializable {
         this.password = password;
     }
 
-    Object getRoles() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Set<Rol> getRoles() {
+        return roles;
     }
 
-    /**
-     *
-     * @param <any>
-     */
-    //public <any> getRoles() {
-      //  return roles;
+    public void setRoles(Set<Rol> roles) {
+        this.roles = roles;
     }
+}
 
-   // public void setRoles(<any> roles) {
-     //   this.roles = roles;
-    //}
-     
-//}

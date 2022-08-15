@@ -7,10 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-/**
- *
- * @author vicky
- */
 public class UsuarioPrincipal implements UserDetails {
 
     private String nombre;
@@ -28,8 +24,8 @@ public class UsuarioPrincipal implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UsuarioPrincipal build(Usuario usuario){ 
-            List<GrantedAuthority> authorities = usuario.getRoles() .stream() .map(rol -> new SimpleGrantedAuthority(rol.getRolNombre() .name())) .collect(Collectors .toList());
+    public static UsuarioPrincipal build(Usuario usuario) {
+        List<GrantedAuthority> authorities = usuario.getRoles().stream().map(rol -> new SimpleGrantedAuthority(rol.getRolNombre().name())).collect(Collectors.toList());
         return new UsuarioPrincipal(usuario.getNombre(), usuario.getNombreUsuario(), usuario.getEmail(), usuario.getPassword(), authorities);
     }
 
@@ -43,17 +39,17 @@ public class UsuarioPrincipal implements UserDetails {
         return password;
     }
 
+    @Override
+    public String getUsername() {
+        return nombreUsuario;
+    }
+
     public String getNombre() {
         return nombre;
     }
 
     public String getEmail() {
         return email;
-    }
-
-    @Override
-    public String getUsername() {
-        return nombreUsuario;
     }
 
     @Override
